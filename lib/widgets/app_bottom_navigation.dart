@@ -3,12 +3,21 @@ import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 
 class AppBottomNavigation extends StatelessWidget {
-  const AppBottomNavigation({super.key});
+  const AppBottomNavigation({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
+
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+
   @override
   Widget build(BuildContext context) => BottomNavigationBar(
     backgroundColor: Colors.white,
     type: BottomNavigationBarType.fixed,
-    currentIndex: 0,
+    currentIndex: currentIndex,
+    onTap: onTap,
     selectedItemColor: AppColors.green,
     items: const [
       BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Shop'),

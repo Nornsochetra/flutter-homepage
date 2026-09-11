@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../models/product.dart';
 import '../utils/app_colors.dart';
-import '../widgets/app_bottom_navigation.dart';
 import '../widgets/category_card.dart';
+import '../widgets/hero_carousel.dart';
 import '../widgets/product_card.dart';
 import '../widgets/section_header.dart';
 
@@ -113,41 +113,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Image.asset(
-                  'assets/images/hero.png',
-                  height: 140,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 5,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.28),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _Indicator(active: true),
-                      SizedBox(width: 4),
-                      _Indicator(),
-                      SizedBox(width: 4),
-                      _Indicator(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const HeroCarousel(),
           _section('Exclusive Offer', exclusive),
           _section('Best Selling', bestSelling),
           const SizedBox(height: 22),
@@ -176,7 +142,6 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
     ),
-    bottomNavigationBar: const AppBottomNavigation(),
   );
 
   Widget _section(String title, List<Product> products) => Column(
@@ -192,24 +157,8 @@ class HomeScreen extends StatelessWidget {
     child: ListView.separated(
       scrollDirection: Axis.horizontal,
       itemCount: products.length,
-      separatorBuilder: (_, __) => const SizedBox(width: 16),
+      separatorBuilder: (_, _) => const SizedBox(width: 16),
       itemBuilder: (_, i) => ProductCard(product: products[i]),
-    ),
-  );
-}
-
-class _Indicator extends StatelessWidget {
-  const _Indicator({this.active = false});
-  final bool active;
-
-  @override
-  Widget build(BuildContext context) => AnimatedContainer(
-    duration: const Duration(milliseconds: 200),
-    width: active ? 20 : 8,
-    height: 6,
-    decoration: BoxDecoration(
-      color: active ? const Color(0xFF53B175) : Colors.white70,
-      borderRadius: BorderRadius.circular(8),
     ),
   );
 }
