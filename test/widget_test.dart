@@ -3,8 +3,28 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_homepage/main.dart';
 
 void main() {
-  testWidgets('displays the grocery home screen', (WidgetTester tester) async {
+  Future<void> openHome(WidgetTester tester) async {
     await tester.pumpWidget(const GroceryApp());
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump(const Duration(milliseconds: 450));
+  }
+
+  testWidgets('shows the splash screen before opening the app', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const GroceryApp());
+
+    expect(find.text('nectar'), findsOneWidget);
+    expect(find.text('online groceries'), findsOneWidget);
+
+    await tester.pump(const Duration(seconds: 2));
+    await tester.pump(const Duration(milliseconds: 450));
+
+    expect(find.text('Exclusive Offer'), findsOneWidget);
+  });
+
+  testWidgets('displays the grocery home screen', (WidgetTester tester) async {
+    await openHome(tester);
 
     expect(find.text('Exclusive Offer'), findsOneWidget);
     expect(find.text('Phnom Penh, Cambodia'), findsOneWidget);
@@ -13,7 +33,7 @@ void main() {
   testWidgets('updates the banner indicator when swiped', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const GroceryApp());
+    await openHome(tester);
 
     double indicatorWidth(int index) =>
         tester.getSize(find.byKey(ValueKey('hero-indicator-$index'))).width;
@@ -34,7 +54,7 @@ void main() {
   testWidgets('automatically advances the banner carousel', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const GroceryApp());
+    await openHome(tester);
 
     double indicatorWidth(int index) =>
         tester.getSize(find.byKey(ValueKey('hero-indicator-$index'))).width;
@@ -52,7 +72,7 @@ void main() {
   testWidgets('opens the explore screen from bottom navigation', (
     WidgetTester tester,
   ) async {
-    await tester.pumpWidget(const GroceryApp());
+    await openHome(tester);
 
     await tester.tap(find.text('Explore'));
     await tester.pumpAndSettle();
