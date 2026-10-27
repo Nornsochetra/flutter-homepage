@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_homepage/screens/login_screen.dart';
 
 import '../utils/app_colors.dart';
 import 'main_screen.dart';
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     Navigator.of(context).pushReplacement(
       PageRouteBuilder<void>(
-        pageBuilder: (_, animation, secondaryAnimation) => const MainScreen(),
+        pageBuilder: (_, animation, secondaryAnimation) => const LoginScreen(),
         transitionsBuilder: (_, animation, secondaryAnimation, child) =>
             FadeTransition(opacity: animation, child: child),
         transitionDuration: const Duration(milliseconds: 450),
